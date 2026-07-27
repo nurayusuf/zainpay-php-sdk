@@ -88,6 +88,16 @@ class ZainBox
         return $this->get($this->getModeUrl() . 'zainbox/list', $params);
     }
 
+    public function view(string $zainboxCode): Response
+    {
+        return $this->get($this->getModeUrl() . 'zainbox/profile/v2/' . $zainboxCode);
+    }
+
+    public function getBillingConfig(string $zainboxCode): Response
+    {
+        return $this->get($this->getModeUrl() . 'zainbox/billing/config/' . $zainboxCode);
+    }
+
     /**
      *  Get the list of first 50 transactions of a merchant
      *

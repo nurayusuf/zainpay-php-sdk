@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.2.10] - 2026-07-27
+## Changes
+- added endpoints for viewing zainbox profile v2 and zainbox billing config
+
 ## [3.2.9] - 2026-06-15
 ## Changes
 - updated transfer endpoint to be using v2 instead of v1
