@@ -108,7 +108,12 @@ class ZainBox
      */
     public function merchantTransactionList($count = 20, ?string $accountNumber, ?string $txnType, ?string $paymentChannel, ?string $dateFrom,  ?string $dateTo): Response
     {
-        return $this->get($this->getModeUrl() . 'zainbox/transactions', array_merge(["count" => $count], FilterUtil::ConstructFilterParams($accountNumber, $txnType, $paymentChannel, $dateFrom, $dateTo)));
+        return $this->get($this->getModeUrl() . 'zainbox/transactions', array_merge(["count" => $count], FilterUtil::ConstructFilterParams(null, $accountNumber, $txnType, $paymentChannel, $dateFrom, $dateTo)));
+    }
+
+    public function allTransactions($count = 20, ?string $zainboxCode, ?string $accountNumber, ?string $txnType, ?string $paymentChannel, ?string $dateFrom,  ?string $dateTo): Response
+    {
+        return $this->get($this->getModeUrl() . 'zainbox/transactions', array_merge(["count" => $count], FilterUtil::ConstructFilterParams($zainboxCode, $accountNumber, $txnType, $paymentChannel, $dateFrom, $dateTo)));
     }
 
     /**

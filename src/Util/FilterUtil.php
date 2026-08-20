@@ -4,9 +4,10 @@ namespace Zainpay\SDK\Util;
 
 class FilterUtil
 {
-    public static function ConstructFilterParams(?string $accountNumber, ?string $txnType, ?string $paymentChannel, ?string $dateFrom, ?string $dateTo)
+    public static function ConstructFilterParams(?string $zainboxCode, ?string $accountNumber, ?string $txnType, ?string $paymentChannel, ?string $dateFrom, ?string $dateTo)
     {
         $params = [];
+        (!empty($zainboxCode)) ? $params['zainboxCode'] = $zainboxCode : "";
         (!empty($accountNumber)) ? $params['accountNumber'] = $accountNumber : "";
         (!empty($txnType)) ? $params['txnType'] = $txnType : "";
         (!empty($paymentChannel)) ? $params['paymentChannel'] = $paymentChannel : "";

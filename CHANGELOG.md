@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.11] - 2026-08-20
+## Changes
+- added transactions endpoint
+- modified RequesTrait and Response to handle jigo responses
+
 ## [3.2.10] - 2026-07-27
 ## Changes
 - added endpoints for viewing zainbox profile v2 and zainbox billing config
