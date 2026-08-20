@@ -195,19 +195,23 @@ trait RequestTrait
         return new Client($config);
     }
 
-    private static function HandleClientExceptionResponse(\GuzzleHttp\Exception\ClientException $e)
+    private static function HandleClientExceptionResponse(\GuzzleHttp\Exception\RequestException $e)
     {
-        $errorResponse = new Response($e->getResponse() ?? null);
+        $response = $e->getResponse();
+        $errorResponse = new Response($response);
         $errorResponse->setError(true);
-        $errorResponse->setErrorMessage($e->getResponse()->getReasonPhrase());
+        $reasonPhrase = $response ? $response->getReasonPhrase() : $e->getMessage();
+        $errorResponse->setErrorMessage($reasonPhrase);
         return $errorResponse;
     }
 
     private static function HandleServerExceptionResponse(\GuzzleHttp\Exception\ServerException $e)
     {
-        $errorResponse = new Response($e->getResponse() ?? null);
+        $response = $e->getResponse();
+        $errorResponse = new Response($response);
         $errorResponse->setError(true);
-        $errorResponse->setErrorMessage($e->getResponse()->getReasonPhrase());
+        $reasonPhrase = $response ? $response->getReasonPhrase() : $e->getMessage();
+        $errorResponse->setErrorMessage($reasonPhrase);
         return $errorResponse;
     }
 }

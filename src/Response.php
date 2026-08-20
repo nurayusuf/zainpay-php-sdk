@@ -5,12 +5,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class Response
 {
-    protected ResponseInterface $response;
+    protected ?ResponseInterface $response;
     protected ?array $decodedResponse;
     protected bool $error = false;
     protected ?string $errorMessage = null;
 
-    public function __construct(ResponseInterface $response)
+    public function __construct(?ResponseInterface $response)
     {
         $this->response = $response;
         $this->decodedResponse = $this->decodeResponse();
@@ -55,7 +55,11 @@ class Response
 
     public function getDescription(): string
     {
-        return $this->decodedResponse['description'] ?? $this->response->getReasonPhrase();
+        $reasonPhrase = '';
+        if ($this->response !== null) {
+            $reasonPhrase = $this->response->getReasonPhrase();
+        }
+        return $this->decodedResponse['description'] ?? $reasonPhrase;
     }
 
     public function getData()
@@ -63,14 +67,14 @@ class Response
         return $this->decodedResponse['data'] ?? null;
     }
 
-    public function getResponse(): ResponseInterface
+    public function getResponse(): ?ResponseInterface
     {
         return $this->response;
     }
 
     public function getStatusCode(): int
     {
-        return $this->response->getStatusCode();
+        return $this->response !== null ? $this->response->getStatusCode() : 0;
     }
 
     public function setError(bool $error): self
