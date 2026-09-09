@@ -1,0 +1,20 @@
+{
+  "status": "200 OK",
+  "code": "00",
+  "description": "Payment link Info",
+  "data": {
+    "amount": 150000.0,
+    "description": "These are new arrivals from Dubai",
+    "metaData": "{\"orderId\":123}",
+    "zainboxCode": "STORE_Xy9Kp2mNqRtVwZ1sL",
+    "name": "Dubai Abayas",
+    "collectMobileNumber": true,
+    "collectAddress": false,
+    "returnUrl": "https://example.com/return/payment",
+    "paymentLinkId": "V1StGXR8_Z5jdHi6B",
+    "totalSuccessfulCount": 5,
+    "totalAmountCollected": 750000.0,
+    "maxPaymentCount": 10,
+    "isActive": true
+  }
+}

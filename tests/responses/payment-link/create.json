@@ -1,0 +1,10 @@
+{
+  "status": "200 OK",
+  "code": "00",
+  "description": "Successfully created a payment link",
+  "data": {
+    "name": "Dubai Abayas",
+    "description": "These are new arrivals from Dubai",
+    "url": "https://zainpay.ng/payment/V1StGXR8_Z5jdHi6B"
+  }
+}
