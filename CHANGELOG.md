@@ -3,6 +3,7 @@
 ## [3.2.12] - 2026-09-09
 ## Changes
 - implemented payment link
+- updated card and deposit verification to use v2 link instead of v1
 
 ## [3.2.11] - 2026-08-20
 ## Changes
