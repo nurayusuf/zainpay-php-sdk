@@ -43,6 +43,12 @@ A PHP API wrapper for [Zainpay](https://zainpay.ng).
     - [Deposit Verification V2](#deposit-verification-v2)
     - [Repush Deposit Event](#repush-deposit-event)
     - [Reconcile Bank Deposit](#reconcile-bank-deposit)
+  - [Payment Link](#payment-link)
+    - [Create Payment Link](#create-payment-link)
+    - [Activate Payment Link](#activate-payment-link)
+    - [Deactivate Payment Link](#deactivate-payment-link)
+    - [Validate Payment Link](#validate-payment-link)
+    - [Get Payment Link Profile](#get-payment-link-profile)
   - [Bank](#bank)
     - [Get Bank List](#get-bank-list)
     - [Name Enquiry](#name-enquiry)
@@ -1534,6 +1540,204 @@ The payload's settlementAccountList parameter is an array/list of bank accounts 
             "code": "00",
         	"description": "Deposit verification was successful",
         	"status": "200 OK"
+        }
+    ```
+
+## Payment Link
+
+Payment links provide a simple way to generate a shareable payment URL that customers can use to pay a specific amount. Links can be one-time or reusable, with optional expiry datetime. A merchant can activate or deactivate any of their links at any time.
+
+### Create Payment Link
+- This request enables a merchant to create a payment link for their zainbox.
+
+    ```php
+        use Zainpay\SDK\Engine;
+        use Zainpay\SDK\PaymentLink;
+
+        require __DIR__ . '/vendor/autoload.php';
+
+        Engine::setMode(Engine::MODE_DEVELOPMENT);
+        Engine::setToken('<PUBLIC_KEY>');
+
+        $response = PaymentLink::instantiate()->create(
+            'STORE_Xy9Kp2mNqRtVwZ1sL',              //zainboxCode            - required (string)
+            'Dubai Abayas',                         //name                   - required (string)
+            '150000',                               //amount                 - required (string) : in kobo
+            'These are new arrivals from Dubai',    //description            - optional (string|null)
+            '2027-06-01T09:00:00',                  //expiresAt              - optional (string|null) : YYYY-MM-DDTHH:MM:SS format
+            'https://example.com/return/payment',   //returnUrl              - optional (string|null)
+            ['orderId' => 123],                     //metaData               - optional (array|null)
+            10,                                     //maxPaymentCount        - optional (int|null)
+            true,                                   //collectMobileNumber    - optional (bool|null)
+            false,                                  //collectAddress         - optional (bool|null)
+            'dubai-abayas-2027'                     //customPaymentLinkId    - optional (string|null)
+        );
+
+        if ($response->hasSucceeded()){
+            var_dump($response->getData());
+        }
+    ```
+
+    ***Response***
+    ```json
+        {
+            "status": "200 OK",
+            "code": "00",
+            "description": "Successfully created a payment link",
+            "data": {
+                "name": "Dubai Abayas",
+                "description": "These are new arrivals from Dubai",
+                "url": "https://zainpay.ng/payment/V1StGXR8_Z5jdHi6B"
+            }
+        }
+    ```
+
+### Activate Payment Link
+- This request enables a merchant to activate a previously deactivated payment link. The link must belong to the authenticated merchant.
+
+    ```php
+        use Zainpay\SDK\Engine;
+        use Zainpay\SDK\PaymentLink;
+
+        require __DIR__ . '/vendor/autoload.php';
+
+        Engine::setMode(Engine::MODE_DEVELOPMENT);
+        Engine::setToken('<PUBLIC_KEY>');
+
+        $response = PaymentLink::instantiate()->activate(
+            'V1StGXR8_Z5jdHi6B'  //paymentLinkId - required (string)
+        );
+
+        if ($response->hasSucceeded()){
+            var_dump($response->getDescription());
+        }
+    ```
+
+    ***Response***
+    ```json
+        {
+            "status": "200 OK",
+            "code": "00",
+            "description": "Payment link activated",
+            "data": null
+        }
+    ```
+
+### Deactivate Payment Link
+- This request enables a merchant to deactivate a payment link. Once deactivated, the link can no longer be used to initiate payments. The link can be reactivated at any time via the activate endpoint.
+
+    ```php
+        use Zainpay\SDK\Engine;
+        use Zainpay\SDK\PaymentLink;
+
+        require __DIR__ . '/vendor/autoload.php';
+
+        Engine::setMode(Engine::MODE_DEVELOPMENT);
+        Engine::setToken('<PUBLIC_KEY>');
+
+        $response = PaymentLink::instantiate()->deactivate(
+            'V1StGXR8_Z5jdHi6B'  //paymentLinkId - required (string)
+        );
+
+        if ($response->hasSucceeded()){
+            var_dump($response->getDescription());
+        }
+    ```
+
+    ***Response***
+    ```json
+        {
+            "status": "200 OK",
+            "code": "00",
+            "description": "Payment link deactivated",
+            "data": null
+        }
+    ```
+
+### Validate Payment Link
+- This is a public endpoint used by the payment frontend to validate a link and obtain the InlineJS token needed to render the payment form. Returns 404 if the link does not exist, has expired, or has been deactivated. **No authentication required.**
+
+    ```php
+        use Zainpay\SDK\Engine;
+        use Zainpay\SDK\PaymentLink;
+
+        require __DIR__ . '/vendor/autoload.php';
+
+        Engine::setMode(Engine::MODE_DEVELOPMENT);
+        Engine::setToken('<PUBLIC_KEY>');
+
+        $response = PaymentLink::instantiate()->validate(
+            'V1StGXR8_Z5jdHi6B'  //paymentLinkId - required (string)
+        );
+
+        if ($response->hasSucceeded()){
+            var_dump($response->getData());
+        }
+    ```
+
+    ***Response***
+    ```json
+        {
+            "status": "200 OK",
+            "code": "00",
+            "description": "Payment link form Initialization",
+            "data": {
+                "amount": 150000.0,
+                "description": "These are new arrivals from Dubai",
+                "metaData": "{\"orderId\":123}",
+                "zainboxCode": "STORE_Xy9Kp2mNqRtVwZ1sL",
+                "name": "Dubai Abayas",
+                "collectMobileNumber": true,
+                "collectAddress": false,
+                "inLineJsToken": "eybnnythffdd..",
+                "returnUrl": "https://example.com/return/payment",
+                "paymentLinkId": "V1StGXR8_Z5jdHi6B"
+            }
+        }
+    ```
+
+### Get Payment Link Profile
+- This is a public endpoint that returns the full profile and statistics for a payment link. Returns 404 if the link does not exist, has expired, or has been deactivated. **No authentication required.**
+
+    ```php
+        use Zainpay\SDK\Engine;
+        use Zainpay\SDK\PaymentLink;
+
+        require __DIR__ . '/vendor/autoload.php';
+
+        Engine::setMode(Engine::MODE_DEVELOPMENT);
+        Engine::setToken('<PUBLIC_KEY>');
+
+        $response = PaymentLink::instantiate()->profile(
+            'V1StGXR8_Z5jdHi6B'  //paymentLinkId - required (string)
+        );
+
+        if ($response->hasSucceeded()){
+            var_dump($response->getData());
+        }
+    ```
+
+    ***Response***
+    ```json
+        {
+            "status": "200 OK",
+            "code": "00",
+            "description": "Payment link Info",
+            "data": {
+                "amount": 150000.0,
+                "description": "These are new arrivals from Dubai",
+                "metaData": "{\"orderId\":123}",
+                "zainboxCode": "STORE_Xy9Kp2mNqRtVwZ1sL",
+                "name": "Dubai Abayas",
+                "collectMobileNumber": true,
+                "collectAddress": false,
+                "returnUrl": "https://example.com/return/payment",
+                "paymentLinkId": "V1StGXR8_Z5jdHi6B",
+                "totalSuccessfulCount": 5,
+                "totalAmountCollected": 750000.0,
+                "maxPaymentCount": 10,
+                "isActive": true
+            }
         }
     ```
 

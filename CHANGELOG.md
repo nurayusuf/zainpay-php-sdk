@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.2.12] - 2026-09-09
+## Changes
+- implemented payment link
+
 ## [3.2.11] - 2026-08-20
 ## Changes
 - added transactions endpoint
