@@ -1,0 +1,17 @@
+{
+  "status": "200 OK",
+  "code": "00",
+  "description": "Payment link form Initialization",
+  "data": {
+    "amount": 150000.0,
+    "description": "These are new arrivals from Dubai",
+    "metaData": "{\"orderId\":123}",
+    "zainboxCode": "STORE_Xy9Kp2mNqRtVwZ1sL",
+    "name": "Dubai Abayas",
+    "collectMobileNumber": true,
+    "collectAddress": false,
+    "inLineJsToken": "eybnnythffdd..",
+    "returnUrl": "https://example.com/return/payment",
+    "paymentLinkId": "V1StGXR8_Z5jdHi6B"
+  }
+}
