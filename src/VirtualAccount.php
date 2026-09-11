@@ -74,7 +74,7 @@ class VirtualAccount
      */
     public function verifyDepositTransaction(string $tnxId): Response
     {
-        return $this->get($this->getModeUrl() . 'virtual-account/wallet/deposit/verify/' . $tnxId);
+        return $this->get($this->getModeUrl() . 'virtual-account/wallet/deposit/verify/v2/' . $tnxId);
     }
 
     public function verifyDepositTransactionV2(string $tnxId): Response

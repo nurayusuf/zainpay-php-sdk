@@ -37,7 +37,7 @@ class Card
     public function verifyCardPayment(
         string $transactionReference
     ): Response {
-        return $this->get($this->getModeUrl() . 'virtual-account/wallet/deposit/verify/' . $transactionReference);
+        return $this->get($this->getModeUrl() . 'virtual-account/wallet/deposit/verify/v2/' . $transactionReference);
     }
 
     public function verifyCardPaymentV2(

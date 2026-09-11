@@ -3,6 +3,7 @@
 ## [3.2.12] - 2026-09-09
 ## Changes
 - implemented payment link
+- updated all txns verifications functions to be using v2 endpoint instead of v1 
 
 ## [3.2.11] - 2026-08-20
 ## Changes
