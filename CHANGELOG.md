@@ -27,15 +27,6 @@
 - added endpoints for notification service subscription
 - added request methods that doesnt require auth in RequestTrait
 - added endpoints for generating auth token and regenerating of auth keys (secretKey)
-
-## [3.2.6] - 2025-11-21
-## Changes
-- added endpoints for notification service subscription
-- added request methods that doesnt require auth in RequestTrait
-- added endpoints for generating auth token and regenerating of auth keys (secretKey)
-
-## [3.2.6] - 2025-11-21
-## Changes
 - added an endpoint for getting zainbox ISA (internal settlement account)
 
 ## [3.2.5] - 2025-06-23
@@ -46,6 +37,10 @@
 ## [3.2.4] - 2025-05-07
 ## Changes
 - added endpoints for fetching and filtering settlement history for a zainbox
+
+## [3.2.3] - 2024-12-26
+## Changes
+- placeholder for version 3.2.3
 
 ## [3.2.2] - 2024-12-25
 ## Changes
