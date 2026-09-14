@@ -184,4 +184,8 @@ class VirtualAccount
 
         return $this->get($this->getModeUrl() . 'virtual-account/wallet/transaction/reconcile/bank-deposit', $params);
     }
+
+    public function getAllowedBanksForDynamicVA(): Response {
+        return $this->get($this->getModeUrl() . 'virtual-account/dynamic/allowed-banks');
+    }
 }
