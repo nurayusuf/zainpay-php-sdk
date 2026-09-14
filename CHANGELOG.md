@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.13] - 2026-09-14
+## Changes
+- fixed total payment collected by merchant function
+- added endpoint for getting list of allowed banks for dynamic VA 
+
 ## [3.2.12] - 2026-09-09
 ## Changes
 - implemented payment link

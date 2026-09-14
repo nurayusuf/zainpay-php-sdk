@@ -287,7 +287,7 @@ class ZainBox
      */
     public function totalPaymentCollectedByZainbox(string $zainboxCode, ?string $dateFrom, ?string $dateTo): Response
     {
-        return $this->get($this->getModeUrl() . 'zainbox/transfer/deposit/summary/' . $zainboxCode, FilterUtil::constructFilterParams(null, null, null, $dateFrom, $dateTo));
+        return $this->get($this->getModeUrl() . 'zainbox/transfer/deposit/summary/' . $zainboxCode, FilterUtil::constructFilterParams(null, null, null,null, $dateFrom, $dateTo));
     }
 
     /**
